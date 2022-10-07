@@ -1,5 +1,5 @@
-import { Table, TableHead, TableBody, TableRow, TableCell, TablePagination, Typography, Box, IconButton, useTheme } from "@mui/material";
-import { LastPage, FirstPage } from "@mui/icons-material";
+import { Table, TableContainer, TableHead, TableBody, TableFooter, TableRow, TableCell, TablePagination, Typography, Box, IconButton, useTheme } from "@mui/material";
+import { LastPage, FirstPage, KeyboardArrowRight, KeyboardArrowLeft } from "@mui/icons-material";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Container } from "@mui/system";
 import { Api } from "../api/Api";
@@ -15,7 +15,7 @@ interface TablePaginationActionsProps {
   ) => void;
 }
 
-function TablePaginatioAction(props: TablePaginationActionsProps) {
+function TablePaginationActions(props: TablePaginationActionsProps) {
   const theme = useTheme();
   const {count , page, rowsPerPage, onPageChange } = props;
 
@@ -24,8 +24,8 @@ function TablePaginatioAction(props: TablePaginationActionsProps) {
   };
 
   const handleBackButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    onPageChange(event, page -1);
-  }
+    onPageChange(event, page - 1);
+  };
 
   const handleNextButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onPageChange(event, page + 1);
@@ -33,12 +33,21 @@ function TablePaginatioAction(props: TablePaginationActionsProps) {
 
   const handleLastPageButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     onPageChange(event, Math.max(0, Math.ceil(count / rowsPerPage) - 1))
-  }
+  };
 
   return(
     <Box sx={{flexShrink: 0, ml: 2.5}}>
-      <IconButton onClick={handleFirstPageButtonClick} disabled={page === 0} aria-label="first page">
+      <IconButton onClick={handleFirstPageButtonClick} disabled={page === 0} aria-label="first page" className="text-emerald-400">
         {theme.direction === "rtl" ? <LastPage /> : <FirstPage />}
+      </IconButton>
+      <IconButton onClick={handleBackButtonClick} disabled={page === 0} aria-label="previous page" className="text-emerald-400">
+        {theme.direction === "rtl" ? <KeyboardArrowRight /> : <KeyboardArrowLeft />}
+      </IconButton>
+      <IconButton onClick={handleNextButtonClick} disabled={page >= Math.ceil(count / rowsPerPage) -1} aria-label="next page" className="text-emerald-400">
+        {theme.direction === "rtl" ? <KeyboardArrowLeft /> : <KeyboardArrowRight />}
+      </IconButton>
+      <IconButton onClick={handleLastPageButtonClick} disabled={page >= Math.ceil(count / rowsPerPage) - 1} aria-label="last page" className="text-emerald-400">
+        {theme.direction === "rtl" ? <FirstPage /> : <LastPage />}
       </IconButton>
     </Box>
   );
@@ -47,19 +56,18 @@ function TablePaginatioAction(props: TablePaginationActionsProps) {
 
 
 
-
-
-
 export default function Cryptocurrency() {
   const [data, setData] = useState([""]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
-  const handleChangePage = (event: unknown, newPage: number) =>  setPage(newPage);
-  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
-    setRowsPerPage(+event.target.value);
+  const handleChangePage = (event: React.MouseEvent<HTMLButtonElement> | null, newPage: number) =>  setPage(newPage);
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+
+  console.log(data);
 
   useEffect(() => {
     new Api().coins
@@ -70,7 +78,7 @@ export default function Cryptocurrency() {
 
   return (
     <MainLayout>
-        <Container className="mt-10">
+        <TableContainer className="mt-10">
           <Table className="bg-neutral-900 border-solid border-1 border-gray rounded-2xl border-separate">
             <TableHead>
               <TableRow>
@@ -82,10 +90,11 @@ export default function Cryptocurrency() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {data.map((val: any, index) => {
+              {(rowsPerPage > 0 ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data)
+              .map((val: any, index) => {
                 return (
                   <TableRow key={val.id}>
-                    <TableCell className="border-0 text-white">{index + 1}</TableCell>
+                    <TableCell className="border-0 text-white">{val.market_cap_rank}</TableCell>
                     <TableCell className="border-0 text-white flex">
                       <img src={val.image} alt="Crypto" width={20} height={20}/>
                       <Typography className="mx-3">{val.name}</Typography>
@@ -106,18 +115,29 @@ export default function Cryptocurrency() {
                 );
               })}
             </TableBody>
-          </Table>
-        </Container>
+            <TableFooter>
+              <TableRow>
                 <TablePagination
-                  className="text-white"
-                  rowsPerPageOptions={[10, 25, 50]}
-                  component="div"
+                  className="text-emerald-400"
+                  rowsPerPageOptions={[10, 25, 50, { label: 'All', value: -1 }]}
+                  colSpan={3}
                   count={data.length}
                   rowsPerPage={rowsPerPage}
                   page={page}
+                  SelectProps={{
+                    inputProps: {
+                      'aria-label': 'rows per page',
+                    },
+                    native: true,
+                  }}
                   onPageChange={handleChangePage}
                   onRowsPerPageChange={handleChangeRowsPerPage}
+                  ActionsComponent={TablePaginationActions}
                 />
+              </TableRow>
+            </TableFooter>
+          </Table>
+        </TableContainer>
     </MainLayout>
   );
 }
