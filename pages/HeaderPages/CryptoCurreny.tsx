@@ -1,9 +1,8 @@
-import { Table, TableContainer, TableHead, TableBody, TableFooter, TableRow, TableCell, TablePagination, Typography, Box, IconButton, useTheme } from "@mui/material";
+import { Table, Grid, TableContainer, TableHead, TableBody, TableFooter, TableRow, TableCell, TablePagination, Typography, Box, IconButton, useTheme } from "@mui/material";
 import { LastPage, FirstPage, KeyboardArrowRight, KeyboardArrowLeft } from "@mui/icons-material";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Container } from "@mui/system";
 import { Api } from "../api/Api";
-import MainLayout from "../../components/layouts/MainLayout";
 
 interface TablePaginationActionsProps {
   count: number;
@@ -77,67 +76,71 @@ export default function Cryptocurrency() {
   }, []);
 
   return (
-    <MainLayout>
-        <TableContainer className="mt-10">
-          <Table className="bg-neutral-900 border-solid border-1 border-gray rounded-2xl border-separate">
-            <TableHead>
-              <TableRow>
-                <TableCell className="text-neutral-500 font-bold">#</TableCell>
-                <TableCell className="text-neutral-500 font-bold">Name</TableCell>
-                <TableCell className="text-neutral-500 font-bold">Price</TableCell>
-                <TableCell className="text-neutral-500 font-bold">Change</TableCell>
-                <TableCell className="text-neutral-500 font-bold">Market Cap</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {(rowsPerPage > 0 ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data)
-              .map((val: any, index) => {
-                return (
-                  <TableRow key={val.id}>
-                    <TableCell className="border-0 text-white">{val.market_cap_rank}</TableCell>
-                    <TableCell className="border-0 text-white flex">
-                      <img src={val.image} alt="Crypto" width={20} height={20}/>
-                      <Typography className="mx-3">{val.name}</Typography>
-                      <Typography className="text-slate-300">{String(val.symbol).toUpperCase()}</Typography>
-                    </TableCell>
-                    <TableCell className="border-0 text-white">{val.current_price + "$"}</TableCell>
-                    <TableCell
-                      className={
-                        parseFloat(val.market_cap_change_percentage_24h) >= 0
-                          ? "text-green-600 border-0"
-                          : "text-red-600 border-0"
-                      }
-                    >
-                      {Number(val.market_cap_change_percentage_24h).toFixed(1) + "%"}
-                    </TableCell>
-                    <TableCell className="border-0 text-white">{Number(val.market_cap / 1000000000).toFixed(2) + "B"}</TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
-            <TableFooter>
-              <TableRow>
-                <TablePagination
-                  className="text-emerald-400"
-                  rowsPerPageOptions={[10, 25, 50, { label: 'All', value: -1 }]}
-                  colSpan={3}
-                  count={data.length}
-                  rowsPerPage={rowsPerPage}
-                  page={page}
-                  SelectProps={{
-                    inputProps: {
-                      'aria-label': 'rows per page',
-                    },
-                    native: true,
-                  }}
-                  onPageChange={handleChangePage}
-                  onRowsPerPageChange={handleChangeRowsPerPage}
-                  ActionsComponent={TablePaginationActions}
-                />
-              </TableRow>
-            </TableFooter>
-          </Table>
-        </TableContainer>
-    </MainLayout>
+    // <MainLayout>
+      <Grid className="w-full">
+        <Container>
+          <TableContainer className="mt-10">
+            <Table className="bg-neutral-900 border-solid border-1 border-gray rounded-2xl border-separate">
+              <TableHead>
+                <TableRow>
+                  <TableCell className="text-neutral-500 font-bold">#</TableCell>
+                  <TableCell className="text-neutral-500 font-bold">Name</TableCell>
+                  <TableCell className="text-neutral-500 font-bold">Price</TableCell>
+                  <TableCell className="text-neutral-500 font-bold">Change</TableCell>
+                  <TableCell className="text-neutral-500 font-bold">Market Cap</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {(rowsPerPage > 0 ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data)
+                .map((val: any) => {
+                  return (
+                    <TableRow key={val.id}>
+                      <TableCell className="border-0 text-white">{val.market_cap_rank}</TableCell>
+                      <TableCell className="border-0 text-white flex">
+                        <img src={val.image} alt="Crypto" width={20} height={20}/>
+                        <Typography className="mx-3">{val.name}</Typography>
+                        <Typography className="text-slate-300">{String(val.symbol).toUpperCase()}</Typography>
+                      </TableCell>
+                      <TableCell className="border-0 text-white">{val.current_price + "$"}</TableCell>
+                      <TableCell
+                        className={
+                          parseFloat(val.market_cap_change_percentage_24h) >= 0
+                            ? "text-green-600 border-0"
+                            : "text-red-600 border-0"
+                        }
+                      >
+                        {Number(val.market_cap_change_percentage_24h).toFixed(1) + "%"}
+                      </TableCell>
+                      <TableCell className="border-0 text-white">{Number(val.market_cap / 1000000000).toFixed(2) + "B"}</TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+              <TableFooter>
+                <TableRow>
+                  <TablePagination
+                    className="text-emerald-400"
+                    rowsPerPageOptions={[10, 25, 50, { label: 'All', value: -1 }]}
+                    colSpan={3}
+                    count={data.length}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    SelectProps={{
+                      inputProps: {
+                        'aria-label': 'rows per page',
+                      },
+                      native: true,
+                    }}
+                    onPageChange={handleChangePage}
+                    onRowsPerPageChange={handleChangeRowsPerPage}
+                    ActionsComponent={TablePaginationActions}
+                  />
+                </TableRow>
+              </TableFooter>
+            </Table>
+          </TableContainer>
+        </Container>
+      </Grid>
+    // </MainLayout>
   );
 }
