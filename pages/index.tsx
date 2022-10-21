@@ -5,7 +5,6 @@ import MainLayout from "../components/layouts/MainLayout";
 import MainPage from "../components/layouts/MainPage";
 import MainTable from "../components/Tables/MainTable";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-
 const Home: NextPage = () => {
   return (
     <div className="absolute md:relative">
