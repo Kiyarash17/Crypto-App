@@ -39,19 +39,13 @@ export default function Footer() {
     <div className="my-5">
       <div>
         <Container>
-          <Grid2 container className="text-center">
+          <Grid2 container className="text-center w-full flex justify-center items-center">
             <Grid2 xs={12} md={3}>
-              <Typography variant="h5" className="mb-4">
-                INCRY<span className="text-emerald-400">PKO</span>
-              </Typography>
-              <Typography>
-                Incrypko provides a fundamental analysis of the crypto market.
-                In addition to tracking price, volume and market capitalisation,
-                CoinGecko tracks community growth, open-source code development,
-                major events and on-chain metrics
-              </Typography>
+                <Typography variant="h5">
+                  INCRY<span className="text-emerald-400">PKO</span>
+                </Typography>
             </Grid2>
-            <Grid2 xs={12} md={7} className="xs:w-full md:w-auto">
+            <Grid2 xs={12} md={6} className="xs:w-full md:w-auto text-center">
               <List className="w-full flex justify-center">
                 {items.map((val, index) => {
                   return (
@@ -66,8 +60,8 @@ export default function Footer() {
                 })}
               </List>
             </Grid2>
-            <Grid2 xs={12} md={2}>
-              <Stack direction="row" spacing={2} alignItems="center" justifyContent="center" className="justify-center">
+            <Grid2 xs={12} md={3}>
+              <Stack direction="row" spacing={2} alignItems="center" justifyContent="center">
                 <Link href="/">
                   <a>
                     <ListItemButton>
@@ -96,6 +90,18 @@ export default function Footer() {
             </Grid2>
           </Grid2>
         </Container>
+      </div>
+      <div>
+        <Grid2 xs={12} className="my-3">
+          <Container className="md:w-11/12">
+            <Typography align="center">
+              Incrypko provides a fundamental analysis of the crypto market.
+              In addition to tracking price, volume and market capitalisation,
+              CoinGecko tracks community growth, open-source code development,
+              major events and on-chain metrics
+            </Typography>
+          </Container>
+        </Grid2>
       </div>
       <div>
         <Container className="text-center">

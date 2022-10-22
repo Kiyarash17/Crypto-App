@@ -7,7 +7,7 @@ import MainTable from "../components/Tables/MainTable";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 const Home: NextPage = () => {
   return (
-    <div className="absolute md:relative">
+    <div className="absolute lg:relative">
       <Head>
         <title>Crypto App</title>
         <link rel="icon" href="/favicon.ico" />
