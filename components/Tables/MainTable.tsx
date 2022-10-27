@@ -3,6 +3,7 @@ import { LastPage, FirstPage, KeyboardArrowRight, KeyboardArrowLeft } from "@mui
 import { useEffect, useState } from "react";
 import { Container } from "@mui/system";
 import { Api } from "../../pages/api/Api"; 
+import Link from "next/link";
 
 interface TablePaginationActionsProps {
   count: number;
@@ -54,9 +55,12 @@ function TablePaginationActions(props: TablePaginationActionsProps) {
 }
 
 
+type Props = {
+  data: any,
+}
 
-export default function MainTable() {
-    const [data, setData] = useState([""]);
+export default function MainTable(props: Props) {
+  // const [data, setData] = useState([""]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
@@ -66,12 +70,12 @@ export default function MainTable() {
     setPage(0);
   };
 
-  useEffect(() => {
-    new Api().coins
-      .marketsList({ vs_currency: "usd", price_change_percentage: "24h" })
-      .then((res) => res.json())
-      .then((json) => setData(json));
-  }, []);
+  // useEffect(() => {
+  //   new Api().coins
+  //     .marketsList({ vs_currency: "usd", price_change_percentage: "24h" })
+  //     .then((res) => res.json())
+  //     .then((json) => setData(json));
+  // }, []);
 
   return (
       <Grid className="w-full">
@@ -87,38 +91,41 @@ export default function MainTable() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {(rowsPerPage > 0 ? data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : data)
-                .map((val: any, index) => {
+                {(rowsPerPage > 0 ? props.data?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage) : props.data)
+                .map((val: any, index: number) => {
                   return (
-                    <TableRow key={index}>
-                      <TableCell className="border-0 text-white">{val.market_cap_rank}</TableCell>
-                      <TableCell className="border-0 text-white flex">
-                        <img src={val.image} alt="Crypto" width={20} height={20}/>
-                        <Typography className="mx-3">{val.name}</Typography>
-                        <Typography className="text-slate-300">{String(val.symbol).toUpperCase()}</Typography>
-                      </TableCell>
-                      <TableCell className="border-0 text-white">{val.current_price + "$"}</TableCell>
-                      <TableCell
-                        className={
-                          parseFloat(val.market_cap_change_percentage_24h) >= 0
-                            ? "text-green-600 border-0"
-                            : "text-red-600 border-0"
-                        }
-                      >
-                        {Number(val.market_cap_change_percentage_24h).toFixed(1) + "%"}
-                      </TableCell>
-                      <TableCell className="border-0 text-white">{Number(val.market_cap / 1000000000).toFixed(2) + "B"}</TableCell>
-                    </TableRow>
+                    <Link href={`../../coins/${val.id}`} key={index}>
+                      <TableRow className="cursor-pointer hover:bg-neutral-800">
+                        <TableCell className="border-0 text-white">{val.market_cap_rank}</TableCell>
+                        <TableCell className="border-0 text-white flex">
+                          <img src={val.image} alt="Crypto" width={20} height={20}/>
+                          <Typography className="mx-3">{val.name}</Typography>
+                          <Typography className="text-slate-300">{String(val.symbol).toUpperCase()}</Typography>
+                        </TableCell>
+                        <TableCell className="border-0 text-white">{val.current_price + "$"}</TableCell>
+                        <TableCell
+                          className={
+                            parseFloat(val.market_cap_change_percentage_24h) >= 0
+                              ? "text-green-600 border-0"
+                              : "text-red-600 border-0"
+                          }
+                        >
+                          {Number(val.market_cap_change_percentage_24h).toFixed(1) + "%"}
+                        </TableCell>
+                        <TableCell className="border-0 text-white">{Number(val.market_cap / 1000000000).toFixed(2) + "B"}</TableCell>
+                      </TableRow>
+                      
+                    </Link>
                   );
                 })}
               </TableBody>
-              <TableFooter>
-                <TableRow>
+              <TableFooter className="">
+                <TableRow className="">
                   <TablePagination
-                    className="text-emerald-400"
+                    className="text-emerald-400 text-center m-auto"
                     rowsPerPageOptions={[10, 25, 50, { label: 'All', value: -1 }]}
-                    colSpan={3}
-                    count={data.length}
+                    count={props.data?.length}
+                    colSpan={12}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     SelectProps={{

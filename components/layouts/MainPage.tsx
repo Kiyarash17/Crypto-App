@@ -7,8 +7,8 @@ import Grid from "@mui/material/Grid";
 
 export default function MainPage() {
   return (
-    <Grid container className="w-full">
-      <Container className="flex justify-around mt-10 w-full ">
+    <Grid container className="w-full lg:h-[85vh]">
+      <Container className="flex justify-around mt-10 w-full">
         <Grid item className="mr-0 md:mr-48">
           <Typography variant="h2">
             Invest In Digital Art & Crypto Earn{" "}

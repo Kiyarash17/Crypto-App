@@ -1,44 +1,43 @@
-import { Grid, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
-import { Api } from "../api/Api";
-import { useRouter } from "next/router";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import CoinData from "../../components/data/CoinData";
 import Chart from "../../components/chart/Chart";
-import Link from "next/link";
+import { useRouter } from "next/router";
+import { Api } from "../api/Api";
+import MainLayout from "../../components/layouts/MainLayout";
 
-export default function Coin() {
-  const [data, setData] = useState<any>([""]);
-  const router = useRouter();
-  const coin = router.query.id;
+export async function getServerSideProps(context: any) {
+  const CoinName = context.query.id;
+  const res = await new Api().coins.coinsDetail(CoinName);
+  const data = await res.json();
 
-  useEffect(() => {
-    new Api().coins
-      .coinsDetail(coin?.toString()!)
-      .then((res) => res.json())
-      .then((data) => setData(data));
-  });
+  return {
+    props: {
+      data,
+      CoinName,
+    },
+  };
+}
+
+type Props = {
+  data: any;
+  CoinName: string,
+};
+
+export default function Coin(props: Props) {
+  // const [data, setData] = useState<any>([""]);
+  // const router = useRouter();
+  // const coin = router.query.id;
 
   return (
-    <div>
-      {/* <Typography align="center">{data.description.EN}</Typography> */}
-      <Grid xs={12}>
-        <Grid xs={6}>
-          <Grid className="flex">
-            <img src={data?.image?.small} alt="Crypto" />
-            <Typography variant="h2">{data.name}</Typography>
-          </Grid>
-          <Typography>{data.price}</Typography>
-        </Grid>
-        <Grid xs={6}>
-          <Typography align="center" variant="h2">
-            Information
-          </Typography>
-          <Typography>Link: {data.links?.homepage[0]}</Typography>
-          <Typography>Rank: {data.market_cap_rank}</Typography>
-        </Grid>
-      </Grid>
-      <Grid xs={12}>
-        <Chart id={coin} />
-      </Grid>
-    </div>
+    <MainLayout>
+      <Grid2 container className="my-8">
+        <Grid2 xs={12}>
+          <CoinData data={props.data} />
+        </Grid2>
+        <Grid2 xs={12} className="mt-7">
+          <Chart id={props.CoinName} />
+        </Grid2>
+      </Grid2>
+    </MainLayout>
   );
 }

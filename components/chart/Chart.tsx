@@ -8,7 +8,6 @@ const initalState = {
   prices: [],
   labels: [],
   datasets: [],
-  isReady: false,
 };
 
 function reducer(state: any, action: any) {
@@ -27,7 +26,6 @@ function reducer(state: any, action: any) {
       borderColor: "gray",
       borderWidth: 2,
     }],
-    isReady: true
   };
 }
 
@@ -39,19 +37,18 @@ export default function Chart(props: Props) {
   const [state, dispatch] = useReducer(reducer, initalState);
   
   useEffect(() => {
+    new Api().coins.marketChartDetail(String(props.id), {vs_currency: "usd", days: "7"}).
+    then((res) => res.json()).
+    then((data) => dispatch({
+      prices: data.prices,
+    }));
   }, []);
-  new Api().coins.marketChartDetail(String(props.id), {vs_currency: "usd", days: "7"}).
-  then((res) => res.json()).
-  then((data) => dispatch({
-    prices: data.prices,
-  }));
-  
-  console.log(props.id);
-  
+
 
   return(
     <div>
-      {state.isReady && <Line data={state}/>}
+      <Line data={state} />
+      {/* <canvas id={String(state)}>Your Browser does not support Chart</canvas> */}
     </div>
   );
 

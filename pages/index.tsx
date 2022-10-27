@@ -5,9 +5,28 @@ import MainLayout from "../components/layouts/MainLayout";
 import MainPage from "../components/layouts/MainPage";
 import MainTable from "../components/Tables/MainTable";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-const Home: NextPage = () => {
+import { Api } from "./api/Api";
+
+
+export async function getServerSideProps() {
+
+  const res = await new Api().coins.marketsList({ vs_currency: "usd", price_change_percentage: "24h" });
+  const data = await res.json();
+
+  return {
+    props: {
+      data,
+    }
+  }
+}
+
+type Props = {
+  data: any;
+}
+
+const Home: NextPage<Props> = (props) => {
   return (
-    <div className="absolute lg:relative">
+    <div>
       <Head>
         <title>Crypto App</title>
         <link rel="icon" href="/favicon.ico" />
@@ -24,7 +43,7 @@ const Home: NextPage = () => {
             </Container>
           </Grid2>
           <Grid2 className="w-full">
-            <MainTable />
+            <MainTable data={props.data} />
           </Grid2>
         </Grid2>
       </MainLayout>
@@ -33,3 +52,4 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+

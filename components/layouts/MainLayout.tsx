@@ -10,7 +10,7 @@ type Props = {
 
 export default function MainLayout(props: Props) {
   return (
-    <div>
+    <Grid2>
       <Container>
         <Toolbar variant="dense">
           <Container className="w-full">
@@ -27,6 +27,6 @@ export default function MainLayout(props: Props) {
       <div>
         <Footer />
       </div>
-    </div>
+    </Grid2>
   );
 }

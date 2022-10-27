@@ -63,7 +63,13 @@ export default function MobileDrawer(props: Props) {
 
   return (
     <Box className="w-full" component="nav">
-        <Drawer anchor="left" open={props.open} onClose={() => props.setOpen(false)} variant="temporary">
+        <Drawer 
+          anchor="left" 
+          open={props.open} 
+          onClose={() => props.setOpen(false)} 
+          variant="temporary" 
+          PaperProps={{sx: {backgroundColor: "black", color: "white"}}}
+          >
             {drawer}
         </Drawer>
     </Box>
