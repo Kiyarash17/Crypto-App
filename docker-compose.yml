@@ -1,0 +1,22 @@
+version: "3.7"
+
+services:
+  app:
+    image: crypto-docker
+    build: .
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/app
+
+
+
+  # docs:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #     target: dev
+  #   ports:
+  #     - 8000:8000
+  #   volumes:
+  #     - ./:/app
