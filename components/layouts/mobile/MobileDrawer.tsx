@@ -18,19 +18,19 @@ const items = [
   },
   {
     title: "NFT Arts",
-    href: "/HeaderPages/NFTArts",
+    href: "/Pages/NFTArts",
   },
   {
     title: "Trading",
-    href: "/HeaderPages/Trading",
+    href: "/Pages/Trading",
   },
   {
     title: "CryptoCurrency",
-    href: "/HeaderPages/CryptoCurreny",
+    href: "/Pages/CryptoCurreny",
   },
   {
     title: "About Us",
-    href: "/HeaderPages/AboutUs",
+    href: "/Pages/AboutUs",
   },
 ];
 

@@ -19,19 +19,19 @@ export default function Footer() {
     },
     {
       title: "NFT Arts",
-      href: "/HeaderPages/NFTArts",
+      href: "/Pages/NFTArts",
     },
     {
       title: "Trading",
-      href: "/HeaderPages/Trading",
+      href: "/Pages/Trading",
     },
     {
       title: "Cryptocurrency",
-      href: "/HeaderPages/CryptoCurreny",
+      href: "/Pages/CryptoCurreny",
     },
     {
       title: "About us",
-      href: "/HeaderPages/AboutUs",
+      href: "/Pages/AboutUs",
     },
   ];
 
