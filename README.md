@@ -1,34 +1,40 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Crypto App
 
-First, run the development server:
+
+CryptoApp is a powerful and intuitive cryptocurrency tracking app designed to provide users with comprehensive insights into the dynamic world of digital currencies. With CryptoApp, you can easily monitor cryptocurrency prices, trends, and market data, empowering you to make informed investment decisions.
+
+## Features
+
+- **Interactive Charts:** Visualize price movements, trading volume, and historical data using interactive charts powered by [Chart.js](https://www.chartjs.org/). Analyze trends, identify patterns, and make data-driven decisions to optimize your trading strategy.
+- Access real-time data for thousands of cryptocurrencies, including Bitcoin, Ethereum, and altcoins. Get detailed information such as current price, market cap, circulating supply, and more, all conveniently displayed in a user-friendly format.
+
+
+## Tech Stack
+
+**Client:** Nextjs, MUI, TailwindCSS, Chartjs
+
+**API:** Swagger
+
+
+## Authors
+
+- [@Kiyarash Hadidian](https://github.com/Kiyarash17)
+
+
+## Installation
+
+Install with npm
 
 ```bash
-npm run dev
-# or
-yarn dev
+  npm install 
+  npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Install with yarn
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```bash
+  yarn install 
+  yarn run dev
+```
+    
